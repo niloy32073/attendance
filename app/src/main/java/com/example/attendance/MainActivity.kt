@@ -10,12 +10,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.attendance.navigation.Routes
+import com.example.attendance.screens.Attendance
 import com.example.attendance.screens.Home
 import com.example.attendance.screens.Login
+import com.example.attendance.screens.Profile
 import com.example.attendance.screens.SignUp
 import com.example.attendance.ui.theme.AttendanceTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -25,7 +32,25 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Home()
+
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = Routes.LogIn.routes) {
+                        composable(Routes.LogIn.routes) {
+                            Login(navController)
+                        }
+                        composable(Routes.Home.routes) {
+                            Home(navController)
+                        }
+                        composable(Routes.SignUp.routes) {
+                            SignUp(navController)
+                        }
+                        composable(Routes.Profile.routes) {
+                            Profile(navController)
+                        }
+                        composable(Routes.Attendance.routes) {
+                            Attendance()
+                        }
+                    }
                 }
             }
         }

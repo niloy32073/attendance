@@ -20,11 +20,12 @@ import androidx.compose.ui.unit.dp
 import com.example.attendance.ui.theme.Purple40
 
 @Composable
-fun TopBar(){
+fun TopBar(title:String){
     Row(modifier = Modifier
         .fillMaxWidth()
+
         .background(Purple40)
         .padding(5.dp)) {
-        Text(text = "Attendance", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+        Text(text = title, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
     }
 }
