@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,12 +35,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.attendance.R
 import com.example.attendance.components.BottomBar
-import com.example.attendance.components.TopBar
+import com.example.attendance.database.classroom.ClassRoom
+import com.example.attendance.database.classroom.ClassViewModel
 import com.example.attendance.navigation.Routes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(navController: NavController){
+fun Profile(navController: NavController , classViewModel: ClassViewModel){
     var className by remember{ mutableStateOf("") }
     var password by remember{ mutableStateOf("") }
     var newPassword by remember{ mutableStateOf("") }
@@ -76,7 +76,19 @@ fun Profile(navController: NavController){
                 OutlinedTextField(modifier = Modifier.fillMaxWidth(.6f), value = className, onValueChange = {className=it}, label = { Text(text = "শ্রেণির নাম")}, placeholder = { Text(
                     text = "শ্রেণির নাম লিখুন"
                 )})
-                Button(modifier = Modifier.fillMaxWidth(.9f), shape = RoundedCornerShape(5.dp),onClick = { className = "" }) {
+                Button(
+                    modifier = Modifier.fillMaxWidth(.9f),
+                    shape = RoundedCornerShape(5.dp),
+                    onClick = {
+                        classViewModel.inserclass(
+                            ClassRoom(
+                                name = className,
+                                teacherId = 1,
+                                schoolId = 10
+                            )
+                        )
+                        className = ""
+                    }) {
                     Text(text = "শ্রেণি যোগ করুন", textAlign = TextAlign.Center)
                 }
             }
@@ -111,10 +123,10 @@ fun Profile(navController: NavController){
     }
 }
 
-@Preview
-@Composable
-fun PreviewProfile(){
-    val navController= rememberNavController()
-    Profile(navController = navController)
-}
+//@Preview
+//@Composable
+//fun PreviewProfile(){
+//    val navController= rememberNavController()
+//    Profile(navController = navController , classViewModel = classViewModel)
+//}
 
